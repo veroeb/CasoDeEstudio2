@@ -174,7 +174,7 @@ public class TArbolBB<T> implements IArbolBB<T> {
     
     public void eliminarBalanceado(Comparable unaEtiqueta) {
         if (!esVacio()) {
-            this.raiz = this.raiz.eliminar(unaEtiqueta);
+            this.raiz = this.raiz.eliminarBalanceado(unaEtiqueta);
         }
     }
     
