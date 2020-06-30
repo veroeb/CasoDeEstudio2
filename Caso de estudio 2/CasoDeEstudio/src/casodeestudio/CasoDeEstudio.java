@@ -18,20 +18,19 @@ public class CasoDeEstudio {
         
         Empresa empresa = new Empresa("Geant");
         empresa.insertarSucursalesArchivo("src/casodeestudio/sucursales.txt");
-        empresa.getSucursales();
-//        empresa.insertarProductosArchivo("src/casodeestudio/productos.txt");
+        empresa.insertarProductosArchivo("src/casodeestudio/productos.txt");
         
         //*********************************************************************
         
         /*
         Metodos para probar de la parte 1 (sobre la empresa)
         */
-//        empresa.agregarStockEmpresa("src/casodeestudio/stockEmpresa.txt");
-//        empresa.restarStockEmpresa("1403796890", 80);
-//        empresa.eliminarProducto("23432");
-//        empresa.eliminarProducto("1403796890");
-//        empresa.buscarProductoEmpresa("1453060782");
-//        empresa.listarPorNombre();
+        empresa.agregarStockEmpresa("src/casodeestudio/stockEmpresa.txt");
+        empresa.restarStockEmpresa("1403796890", 80);
+        empresa.eliminarProducto("23432");
+        empresa.eliminarProducto("1403796890");
+        empresa.buscarProductoEmpresa("1453060782");
+        empresa.listarPorNombre();
 
 
         /*

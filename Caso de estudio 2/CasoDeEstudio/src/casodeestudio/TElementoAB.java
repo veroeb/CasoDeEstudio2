@@ -8,13 +8,6 @@ public class TElementoAB<T> implements IElementoAB<T> {
     private final T datos;
     private int altura;
 
-    public TElementoAB() {
-        etiqueta = null;
-        hijoIzq = null;
-        hijoDer = null;
-        datos = null;
-    }
-
     public TElementoAB(Comparable unaEtiqueta, T unDato) {
         etiqueta = unaEtiqueta;
         hijoIzq = null;
@@ -26,17 +19,17 @@ public class TElementoAB<T> implements IElementoAB<T> {
     @Override
     public Comparable getEtiqueta() {
         return etiqueta;
-    }    
+    }
 
     @Override
     public T getDatos() {
         return datos;
     }
 
-    public int getAltura(){
+    public int getAltura() {
         return this.altura;
     }
-    
+
     @Override
     public TElementoAB<T> getHijoIzq() {
         return hijoIzq;
@@ -46,7 +39,6 @@ public class TElementoAB<T> implements IElementoAB<T> {
     public TElementoAB<T> getHijoDer() {
         return hijoDer;
     }
-    
 
     @Override
     public void setHijoIzq(TElementoAB<T> elemento) {
@@ -342,100 +334,57 @@ public class TElementoAB<T> implements IElementoAB<T> {
         }
     }
     
+    //****************************************************************************
+
+    //Metodos de arbol AVL    
     
-    //Metodos de arbol AVL
-    
-    public int obtenerAltura() {
-        int izq = 0;
-        int der = 0;
-        if(hijoIzq != null){
-            izq = hijoIzq.obtenerAltura()+1;
-        }
-        if(hijoDer != null){
-            der=hijoDer.obtenerAltura()+1;
-        }
-        return Integer.max(izq,der); 
-    }
-    
-    public boolean esAVL(){
-        boolean esAvl = true;
-        int izq = 0;
-        int der = 0;
-        if (hijoIzq != null){
-            izq = this.obtenerAltura();
-        }
-        if (hijoDer != null){
-            der = this.obtenerAltura();
-        }
-        if (Math.abs(izq-der)>1){
-            return false;
-        } else {
-            if (hijoIzq != null){
-                esAvl = (esAvl && hijoIzq.esAVL());
-            }
-            if (hijoDer != null){
-                esAvl = (esAvl && hijoDer.esAVL());
-            }            
-        }
-        return esAvl;
-    }
-    
+
     /**
      * Inserta claves el arbol balanceando al mismo tiempo .
+     *
      * @param unElemento
-     * @return 
+     * @return
      */
-    public TElementoAB<T> insertarBalanceado(TElementoAB unElemento){
+    public TElementoAB<T> insertarBalanceado(TElementoAB unElemento) {
         if (unElemento.getEtiqueta().compareTo(etiqueta) < 0) {
             if (hijoIzq != null) {
                 hijoIzq = hijoIzq.insertarBalanceado(unElemento);
-                nuevaAltura();
                 return balancearArbol();
-            } 
-            else {
+            } else {
                 hijoIzq = unElemento;
-                System.out.println(hijoIzq.etiqueta);
-                nuevaAltura();
                 return this;
             }
-        } 
-        else if (unElemento.getEtiqueta().compareTo(etiqueta) > 0) {
+        } else if (unElemento.getEtiqueta().compareTo(etiqueta) > 0) {
             if (hijoDer != null) {
                 hijoDer = hijoDer.insertarBalanceado(unElemento);
-                nuevaAltura();
                 return balancearArbol();
-            } 
-            else {
+            } else {
                 hijoDer = unElemento;
-                System.out.println(hijoDer.etiqueta);
-                nuevaAltura();
                 return this;
             }
-        } 
-        else {
+        } else {
             // ya existe un elemento con la misma etiqueta.
             return this;
         }
-    } 
-    
+    }
+
     /**
      * Elimina, balancea de ser necesario y devuelve la nueva Raiz.
+     *
      * @param unaEtiqueta
-     * @return 
+     * @return
      */
     public TElementoAB<T> eliminarBalanceado(Comparable unaEtiqueta) {
-        if (unaEtiqueta.compareTo(this.etiqueta) < 0){
-            if(hijoIzq != null){
+        if (unaEtiqueta.compareTo(this.etiqueta) < 0) {
+            if (hijoIzq != null) {
                 hijoIzq = hijoIzq.eliminarBalanceado(unaEtiqueta);
-                nuevaAltura();
                 return balancearArbol();
             }
             return this;
         }
-        if(unaEtiqueta.compareTo(etiqueta) > 0){
-            if(hijoDer != null){
-                hijoDer = hijoDer.eliminar(unaEtiqueta);
-                nuevaAltura();
+        if (unaEtiqueta.compareTo(etiqueta) > 0) {
+            if (hijoDer != null) {
+                hijoDer = hijoDer.eliminarBalanceado(unaEtiqueta);
                 return balancearArbol();
             }
             return this;
@@ -443,7 +392,7 @@ public class TElementoAB<T> implements IElementoAB<T> {
         TElementoAB<T> nuevo = quitaElNodo();
         return nuevo;
     }
-    
+
     //@Override
     public void nuevaAltura() {
         int izq = -1;
@@ -455,12 +404,12 @@ public class TElementoAB<T> implements IElementoAB<T> {
             der = hijoDer.getAltura();
         }
         altura = 1 + Math.max(izq, der);
-    }    
-    
-     /**
-     * Realiza la rotacion necesaria cuando la causa del desbalance viene del 
+    }
+
+    /**
+     * Realiza la rotacion necesaria cuando la causa del desbalance viene del
      * hijo izquierdo del hijo izquierdo.
-     * 
+     *
      * @param k2 El nodo en el que se da el desbalance
      * @return El nodo que toma el lugar de k2.
      */
@@ -472,11 +421,11 @@ public class TElementoAB<T> implements IElementoAB<T> {
         k1.nuevaAltura();
         return k1;
     }
-    
+
     /**
-     * Realiza la rotacion necesaria cuando la causa del desbalance viene del 
+     * Realiza la rotacion necesaria cuando la causa del desbalance viene del
      * hijo derecho del hijo derecho.
-     * 
+     *
      * @param k1 El nodo en el que se da el desbalance
      * @return El nodo que toma el lugar de k1.
      */
@@ -488,11 +437,11 @@ public class TElementoAB<T> implements IElementoAB<T> {
         k2.nuevaAltura();
         return k2;
     }
-    
+
     /**
-     * Realiza la rotacion necesaria cuando la causa del desbalance viene del 
+     * Realiza la rotacion necesaria cuando la causa del desbalance viene del
      * hijo derecho del hijo izquierdo.
-     * 
+     *
      * @param k3 El nodo en el que se da el desbalance
      * @return El nodo que toma el lugar de k3.
      */
@@ -500,11 +449,11 @@ public class TElementoAB<T> implements IElementoAB<T> {
         k3.setHijoIzq(rotacionRR(k3.getHijoIzq()));
         return rotacionLL(k3);
     }
-    
+
     /**
-     * Realiza la rotacion necesaria cuando la causa del desbalance viene del 
+     * Realiza la rotacion necesaria cuando la causa del desbalance viene del
      * hijo izquierdo del hijo derecho.
-     * 
+     *
      * @param k1 El nodo en el que se da el desbalance
      * @return El nodo que toma el lugar de k1.
      */
@@ -512,57 +461,85 @@ public class TElementoAB<T> implements IElementoAB<T> {
         k1.setHijoDer(rotacionLL(k1.getHijoDer()));
         return rotacionRR(k1);
     }
-    
-    
+
+    private int diferenciaAltura(TElementoAB elem) {
+        int alturaDerecha;
+        int alturaIzquierda;
+        
+        if (elem.getHijoDer() != null) {
+            alturaDerecha = elem.getHijoDer().getAltura();
+        } else {
+            alturaDerecha = -1;
+        }
+
+        if (elem.getHijoIzq() != null) {
+            alturaIzquierda = elem.getHijoIzq().getAltura();
+        } else {
+            alturaIzquierda = -1;
+        }
+
+        return alturaDerecha - alturaIzquierda;
+    }
+
     /**
-     * Realiza una búsqueda sobre el árbol y balancea el mismo de ser necesario 
+     * Realiza una búsqueda sobre el árbol y balancea el mismo de ser necesario
      * .
-     * 
+     *
      * @return Un arbol balanceado.
      */
     private TElementoAB<T> balancearArbol() {
-        if (!esAVL()) {
-            int altIzqIzq = -2;
-            int altIzqDer = -2;
-            int altDerIzq = -2;
-            int altDerDer = -2;
-            
-            if (hijoIzq != null) {
-                if (hijoIzq.getHijoIzq() != null) {
-                    altIzqIzq = hijoIzq.getHijoIzq().getAltura();
-                } else {
-                    altIzqIzq = -1;
-                }
-                if (hijoIzq.getHijoDer() != null) {
-                    altIzqDer = hijoIzq.getHijoDer().getAltura();
-                } else {
-                    altIzqDer = -1;
-                }
-            }
-            
-            if (hijoDer != null) {
-                if (hijoDer.getHijoIzq() != null) {
-                    altDerIzq = hijoDer.getHijoIzq().getAltura();
-                } else {
-                    altDerIzq = -1;
-                }
-                if (hijoDer.getHijoDer() != null) {
-                    altDerDer = hijoDer.getHijoDer().getAltura();
-                } else {
-                    altDerDer = -1;
-                }
-            }
-            
-            if ((altIzqIzq > altIzqDer) && (altIzqIzq > altDerIzq) && (altIzqIzq > altDerDer)) {
+        int diferencia = diferenciaAltura(this);
+        
+        if (diferencia == -2) {
+            if (this.hijoIzq.getHijoIzq().getAltura() > this.hijoIzq.getHijoDer().getAltura()) {
                 return rotacionLL(this);
-            } else if ((altIzqDer > altDerIzq) && (altIzqDer > altDerDer)) {
-                return rotacionLR(this);
-            } else if (altDerIzq > altDerDer) {
-                return rotacionRL(this);
             } else {
+                return rotacionLR(this);
+            }
+        } else if (diferencia == 2) {
+            if (this.hijoDer.getHijoDer().getAltura() > this.hijoDer.getHijoIzq().getAltura()) {
                 return rotacionRR(this);
+            } else {
+                return rotacionRL(this);
             }
         }
         return this;
+    }
+    
+    //*******************************************************************************************
+    
+    public int obtenerAltura() {
+        int izq = 0;
+        int der = 0;
+        if (hijoIzq != null) {
+            izq = hijoIzq.obtenerAltura() + 1;
+        }
+        if (hijoDer != null) {
+            der = hijoDer.obtenerAltura() + 1;
+        }
+        return Integer.max(izq, der);
+    }
+
+    public boolean esAVL() {
+        boolean esAvl = true;
+        int izq = 0;
+        int der = 0;
+        if (hijoIzq != null) {
+            izq = this.obtenerAltura();
+        }
+        if (hijoDer != null) {
+            der = this.obtenerAltura();
+        }
+        if (Math.abs(izq - der) > 1) {
+            return false;
+        } else {
+            if (hijoIzq != null) {
+                esAvl = (esAvl && hijoIzq.esAVL());
+            }
+            if (hijoDer != null) {
+                esAvl = (esAvl && hijoDer.esAVL());
+            }
+        }
+        return esAvl;
     }
 }

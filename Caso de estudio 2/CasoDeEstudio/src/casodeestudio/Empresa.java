@@ -229,6 +229,7 @@ public class Empresa implements IEmpresa{
         Sucursal s = buscarSucursal(sucursal.getId());
         
         if(s == null){
+            
             arbolSucursales.insertarBalanceado(unaSucursal);      //Inserta unicamente si no hay sucursales repetidas
         }
     }
@@ -256,6 +257,7 @@ public class Empresa implements IEmpresa{
             int tel = Integer.parseInt(result[1]);
             int cp = Integer.parseInt(result[3]);
             Sucursal sucursal = new Sucursal(result[0], tel, result[2], cp, result[4], result[5]);
+            
             insertarSucursal(sucursal);
             insertarSucursalPorDepartamento(sucursal);
         }
