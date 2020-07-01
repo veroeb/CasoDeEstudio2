@@ -54,7 +54,7 @@ public class EmpresaTest {
         this.arbolProductosEmpresaPorNombre = new TArbolBB<>();
         this.arbolSucursalesPorDepartamento = new TArbolBB<>();
         s.insertarProducto(p);
-        arbolProductosBase.insertar(elemProducto);
+        arbolProductosBase.insertarBalanceado(elemProducto);
     }
     
     @After
