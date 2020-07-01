@@ -382,7 +382,7 @@ public class TElementoAB<T> implements IElementoAB<T> {
             }
             return this;
         }
-        if (unaEtiqueta.compareTo(etiqueta) > 0) {
+        else if (unaEtiqueta.compareTo(etiqueta) > 0) {
             if (hijoDer != null) {
                 hijoDer = hijoDer.eliminarBalanceado(unaEtiqueta);
                 return balancearArbol();
@@ -393,7 +393,7 @@ public class TElementoAB<T> implements IElementoAB<T> {
         return nuevo;
     }
 
-    //@Override
+   
     public void nuevaAltura() {
         int izq = -1;
         int der = -1;
